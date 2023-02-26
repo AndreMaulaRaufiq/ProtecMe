@@ -1,8 +1,8 @@
 package com.hermes.protecme
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.hermes.protecme.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,4 +16,5 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this,SosActivity::class.java))
         }
     }
+
 }
