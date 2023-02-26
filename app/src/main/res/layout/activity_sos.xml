@@ -57,6 +57,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/imgAnimation3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/circle_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,11 +73,30 @@
         android:fontFamily="@font/poppins_semibold"
         android:maxLines="2"
         android:textAlignment="center"
-        android:text="PUSH \n HOLD"
+        android:text="SOS"
         android:textSize="32sp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginTop="80dp"
+        android:text="STOP\nPelacakan"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_red_round10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgAnimation2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

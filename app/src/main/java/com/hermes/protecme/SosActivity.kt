@@ -1,10 +1,8 @@
 package com.hermes.protecme
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,36 +20,61 @@ class SosActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private  val permissionId = 101
     lateinit var mainHandler:Handler
-    lateinit var runner:Runnable
+    var isLocationStart = true
+
+    private val updateLokasi = object : Runnable {
+        override fun run() {
+            getLokasi()
+            mainHandler.postDelayed(this, 15000)
+        }
+    }
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySosBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
-         mainHandler = Handler(Looper.getMainLooper())
 
-        runner = object : Runnable {
-            override fun run() {
-                getLokasi()
-                mainHandler.postDelayed(this, 15000)
+        //animasi pulse
+        startPulse()
+
+        //evetn every 15s get lokasi
+        mainHandler = Handler(Looper.getMainLooper())
+        //inisiasi lokasi
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        //stop get lokasi
+        binding.button.setOnClickListener {
+            stopGetLokasi()
+            Toast.makeText(this,"Location Stoped",Toast.LENGTH_SHORT).show()
+        }
+        //start get lokasi again
+        binding.imgAnimation1.setOnClickListener {
+            if(isLocationStart){
+                Toast.makeText(this,"Location Has Started",Toast.LENGTH_SHORT).show()
+            }else{
+                mainHandler.post(updateLokasi)
+                startPulse()
             }
         }
 
-        mainHandler.post(runner)
+    }
 
-        startPulse()
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-
+    private fun stopGetLokasi() {
+        mainHandler.removeCallbacks(updateLokasi)
+        stopPulse()
+        isLocationStart = false
     }
 
     private fun getLokasi() {
+        isLocationStart = true
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionId);
+            ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionId);
+
             return
         }
         fusedLocationClient.lastLocation.addOnSuccessListener { location:Location? ->
@@ -62,15 +85,6 @@ class SosActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager =
-            getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
-    }
-
 
 
 
@@ -83,7 +97,7 @@ class SosActivity : AppCompatActivity() {
         if (requestCode == permissionId) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 //permission granted
-//                getLocation()
+
             }else {
                 // permission denied
                 Toast.makeText(this, "You need to grant permission to access location",
@@ -95,16 +109,24 @@ class SosActivity : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
-        mainHandler.removeCallbacks(runner)
+        mainHandler.removeCallbacks(updateLokasi)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainHandler.post(updateLokasi)
     }
 
 
     private fun startPulse() {
         runnable.run()
     }
+    private fun stopPulse() {
+        handlerAnimation.removeCallbacks(runnable)
+    }
     private var runnable = object : Runnable {
         override fun run() {
-
             binding.imgAnimation1.animate().scaleX(4f).scaleY(4f).alpha(0f).setDuration(1000)
                 .withEndAction {
                     binding.apply {
@@ -112,7 +134,6 @@ class SosActivity : AppCompatActivity() {
                         imgAnimation1.scaleY = 1f
                         imgAnimation1.alpha = 1f
                     }
-
                 }
             binding.imgAnimation2.animate().scaleX(4f).scaleY(4f).alpha(0f).setDuration(700)
                 .withEndAction {
@@ -121,10 +142,10 @@ class SosActivity : AppCompatActivity() {
                         imgAnimation2.scaleY = 1f
                         imgAnimation2.alpha = 1f
                     }
-
                 }
-
             handlerAnimation.postDelayed(this, 1500)
         }
     }
+
+
 }
