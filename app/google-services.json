@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "41289601434",
+    "project_id": "protectme-32fcc",
+    "storage_bucket": "protectme-32fcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41289601434:android:6d27c8036c46990f9e6a23",
+        "android_client_info": {
+          "package_name": "com.hermes.protecme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41289601434-hqf8ji52ishdh4385a3jsd7pdp1h4ej7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGvDEx6xtDHa126BsVUFk5XxS0Tfuo5U4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41289601434-hqf8ji52ishdh4385a3jsd7pdp1h4ej7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

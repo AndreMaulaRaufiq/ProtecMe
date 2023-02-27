@@ -16,7 +16,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        binding.btnTlp.setOnClickListener {
+        binding.ivIconReport.setOnClickListener {
+            startActivity(Intent(this,ReportActivity::class.java))
+        }
+        binding.ivIconHistory.setOnClickListener {
+            startActivity(Intent(this,History::class.java))
+        }
+        binding.fab.setOnClickListener {
             startActivity(Intent(this,SosActivity::class.java))
         }
 
