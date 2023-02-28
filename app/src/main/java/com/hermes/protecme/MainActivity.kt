@@ -27,9 +27,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         val listArticle = listOf<Article>(
-            Article("Pelecehan di UNS","berada di uns oleh remaja berinisial S","",""),
-            Article("Pelecehan di Solo","berada di uns oleh remaja berinisial S","",""),
-            Article("Pelecehan di Laweyan","berada di uns oleh remaja berinisial S","",""),
+            Article("Pelecehan di UNS","berada di uns oleh remaja berinisial S","","",""),
+            Article("Pelecehan di Solo","berada di uns oleh remaja berinisial S","","",""),
+            Article("Pelecehan di Laweyan","berada di uns oleh remaja berinisial S","","",""),
         )
 
         val adapterArticle = AdapterArticle(listArticle)

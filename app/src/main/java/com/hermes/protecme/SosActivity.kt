@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.database.*
 import com.hermes.protecme.databinding.ActivitySosBinding
+import com.hermes.protecme.model.Sos
 
 class SosActivity : AppCompatActivity() {
     private var handlerAnimation = Handler(Looper.getMainLooper())
@@ -20,7 +22,11 @@ class SosActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private  val permissionId = 101
     lateinit var mainHandler:Handler
-    var isLocationStart = true
+    private var isLocationStart = true
+
+    lateinit var ref:DatabaseReference
+    lateinit var refIdUser:Query
+
 
     private val updateLokasi = object : Runnable {
         override fun run() {
@@ -37,10 +43,12 @@ class SosActivity : AppCompatActivity() {
         binding = ActivitySosBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
-
-
         //animasi pulse
         startPulse()
+
+        //firebase
+        ref = FirebaseDatabase.getInstance().getReference("sos")
+        refIdUser = ref.orderByChild("id_user").equalTo("123")
 
         //evetn every 15s get lokasi
         mainHandler = Handler(Looper.getMainLooper())
@@ -65,21 +73,75 @@ class SosActivity : AppCompatActivity() {
 
     private fun stopGetLokasi() {
         mainHandler.removeCallbacks(updateLokasi)
+        updateStatusFalse()
         stopPulse()
         isLocationStart = false
+    }
+
+    private fun updateStatusFalse(){
+        refIdUser.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(value:DataSnapshot in snapshot.children){
+                        val sos:Sos? = value.getValue(Sos::class.java)
+                        sos?.status = false
+                        val id = sos?.id
+                        if (id != null) {
+                            ref.child(id).setValue(sos)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun getLokasi() {
         isLocationStart = true
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionId);
+            ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionId)
 
             return
         }
         fusedLocationClient.lastLocation.addOnSuccessListener { location:Location? ->
             if (location != null) {
-                Log.e("ANDI GANTENG","LATITUDE: "+location.latitude.toString())
+
+                refIdUser.addListenerForSingleValueEvent(object:ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.exists()){
+                            for(value:DataSnapshot in snapshot.children){
+                                val sos:Sos? = value.getValue(Sos::class.java)
+                                sos?.latitude = location.latitude.toString()
+                                sos?.longitude = location.longitude.toString()
+                                sos?.status = true
+                                val id = sos?.id
+                                if (id != null) {
+                                    ref.child(id).setValue(sos)
+                                    Log.e("ANDI GANTENG","Data Updated:  ")
+                                }
+                            }
+                        }else{
+                            val idSos:String? = ref.push().key
+                            val sos = Sos(idSos,"123",location.latitude.toString(),location.longitude.toString(),true)
+                            if (idSos != null) {
+                                ref.child(idSos).setValue(sos)
+                                Log.e("ANDI GANTENG","Data created: "+location.latitude.toString())
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+
+
             }else{
                 Log.e("ANDI GANTENG","LOKASI NULL ")
             }
@@ -110,6 +172,7 @@ class SosActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         mainHandler.removeCallbacks(updateLokasi)
+        updateStatusFalse()
 
     }
 

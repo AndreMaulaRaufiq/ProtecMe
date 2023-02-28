@@ -23,6 +23,8 @@ class ReportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report)
 
+        supportActionBar?.hide()
+
         //SPINNER
         val items = resources.getStringArray(R.array.report_array)
         val spinnerAdapter =
