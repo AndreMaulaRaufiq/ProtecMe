@@ -69,7 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="5dp"
         android:layout_marginTop="548dp"
-        android:background=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,13 +79,12 @@
         android:layout_width="wrap_content"
         android:layout_height="5dp"
         android:layout_marginTop="616dp"
-        android:background=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
