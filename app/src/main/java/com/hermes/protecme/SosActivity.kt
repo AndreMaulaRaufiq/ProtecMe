@@ -24,6 +24,7 @@ class SosActivity : AppCompatActivity() {
     lateinit var mainHandler:Handler
     private var isLocationStart = true
 
+
     lateinit var ref:DatabaseReference
     lateinit var refIdUser:Query
 
@@ -46,14 +47,15 @@ class SosActivity : AppCompatActivity() {
         //animasi pulse
         startPulse()
 
+
+
         //firebase
         ref = FirebaseDatabase.getInstance().getReference("sos")
         refIdUser = ref.orderByChild("id_user").equalTo("123")
 
         //evetn every 15s get lokasi
         mainHandler = Handler(Looper.getMainLooper())
-        //inisiasi lokasi
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         //stop get lokasi
         binding.button.setOnClickListener {
             stopGetLokasi()
@@ -101,6 +103,9 @@ class SosActivity : AppCompatActivity() {
     }
 
     private fun getLokasi() {
+        //timestamp
+        val currentTimestamp = System.currentTimeMillis()
+        Log.e("TIMESTAMP",currentTimestamp.toString())
         isLocationStart = true
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
@@ -108,6 +113,8 @@ class SosActivity : AppCompatActivity() {
 
             return
         }
+        //inisiasi lokasi
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation.addOnSuccessListener { location:Location? ->
             if (location != null) {
 
@@ -119,6 +126,7 @@ class SosActivity : AppCompatActivity() {
                                 sos?.latitude = location.latitude.toString()
                                 sos?.longitude = location.longitude.toString()
                                 sos?.status = true
+                                sos?.timeStamp = currentTimestamp
                                 val id = sos?.id
                                 if (id != null) {
                                     ref.child(id).setValue(sos)
@@ -127,7 +135,7 @@ class SosActivity : AppCompatActivity() {
                             }
                         }else{
                             val idSos:String? = ref.push().key
-                            val sos = Sos(idSos,"123",location.latitude.toString(),location.longitude.toString(),true)
+                            val sos = Sos(idSos,"123",location.latitude.toString(),location.longitude.toString(),currentTimestamp,true)
                             if (idSos != null) {
                                 ref.child(idSos).setValue(sos)
                                 Log.e("ANDI GANTENG","Data created: "+location.latitude.toString())
