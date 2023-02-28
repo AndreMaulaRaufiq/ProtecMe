@@ -9,8 +9,11 @@ class History : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
-        val intent = Intent (this, Pelecehan_BST ::class.java)
+        val intent = Intent (this, DetailReportActivity ::class.java)
         val bst = findViewById<ImageView>(R.id.pelecehan)
+
+        supportActionBar?.hide()
+
         bst.setOnClickListener {
             startActivity(intent)
         }

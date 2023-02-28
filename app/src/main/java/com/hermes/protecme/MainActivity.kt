@@ -16,14 +16,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        binding.btnTlp.setOnClickListener {
+        binding.ivIconReport.setOnClickListener {
+            startActivity(Intent(this,ReportActivity::class.java))
+        }
+        binding.ivIconHistory.setOnClickListener {
+            startActivity(Intent(this,History::class.java))
+        }
+        binding.fab.setOnClickListener {
             startActivity(Intent(this,SosActivity::class.java))
         }
 
         val listArticle = listOf<Article>(
-            Article("Pelecehan di UNS","berada di uns oleh remaja berinisial S","",""),
-            Article("Pelecehan di Solo","berada di uns oleh remaja berinisial S","",""),
-            Article("Pelecehan di Laweyan","berada di uns oleh remaja berinisial S","",""),
+            Article("Pelecehan di UNS","berada di uns oleh remaja berinisial S","","",""),
+            Article("Pelecehan di Solo","berada di uns oleh remaja berinisial S","","",""),
+            Article("Pelecehan di Laweyan","berada di uns oleh remaja berinisial S","","",""),
         )
 
         val adapterArticle = AdapterArticle(listArticle)
