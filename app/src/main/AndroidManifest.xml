@@ -28,21 +28,6 @@
 
 
         <activity
-            android:name=".Pelecehan_UNS"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Pelecehan_BST"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".History"
             android:name=".SosActivity"
             android:exported="false">
 
