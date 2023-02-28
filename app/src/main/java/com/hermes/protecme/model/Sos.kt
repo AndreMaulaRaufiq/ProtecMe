@@ -5,7 +5,8 @@ data class Sos(
     val id_user:String,
     var latitude:String,
     var longitude:String,
+    var timeStamp:Long,
     var status:Boolean=false,
 ){
-    constructor():this("","","","",false)
+    constructor():this("","","","",0,false)
 }
