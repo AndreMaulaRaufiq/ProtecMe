@@ -7,4 +7,20 @@
         <item>Pelecehan Seksual Online</item>
         <item>Lainnya</item>
     </string-array>
+    <string name="title_activity_tinjau_lokasi">Tinjau_lokasi</string>
+    <string name="keamanan_wilayah">Keamanan Wilayah</string>
+    <string name="total_kasus">Total Kasus</string>
+    <string name="_2010_2020">(2010 2020)</string>
+    <string name="_69">69</string>
+    <string name="jumlah_kasus_pelecehan_di_kota_solo">Jumlah kasus pelecehan di kota Solo</string>
+    <string name="pasar_kliwon">Pasar Kliwon</string>
+    <string name="_9_kasus">9 kasus</string>
+    <string name="article">Article</string>
+    <string name="_6_tips_melindungi_diri_dari_kekerasan_seksual">6 Tips Melindungi Diri Dari Kekerasan Seksual</string>
+    <string name="boy_ardianto">Boy Ardianto</string>
+    <string name="boila_com">Boila.com</string>
+    <string name="kasus_pelecehan_seksual_seakan_tidak_ada_habisnya_hampir_setiap_hari_kita_bisa_mendengarkan_kasus_tersebut_di_media_sosial_atau_di_surat_kabar_komnas_perempuan_bahkan_menemukan_bahwa_setiap_hari_ada_sekitar_35_wanita_di_indonesia_yang_menjadi_korban_pelecehan_seksual_kendati_begitu_pelecehan_seksual_dapat_dialami_wanita_maupun_pria_dan_hal_ini_harus_disikapi_dengan_serius">Kasus pelecehan seksual seakan tidak ada habisnya. Hampir setiap hari kita bisa mendengarkan kasus tersebut di media sosial atau di surat kabar. Komnas Perempuan bahkan menemukan bahwa setiap hari ada sekitar 35 wanita di Indonesia yang menjadi korban pelecehan seksual. Kendati begitu, pelecehan seksual dapat dialami wanita maupun pria dan hal ini harus disikapi dengan serius. .</string>
+    <string name="Article">Article</string>
+    <string name="_8_desember_2020">8 Desember 2020</string>
+    <string name="link">Link</string>
 </resources>
