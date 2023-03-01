@@ -147,7 +147,7 @@
                 android:id="@+id/iv_bukti"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/imgplaceholder"/>
 
             <CheckBox
                 android:id="@+id/cb_anonim"

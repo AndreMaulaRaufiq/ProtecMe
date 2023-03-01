@@ -7,6 +7,10 @@
         <item>Pelecehan Seksual Online</item>
         <item>Lainnya</item>
     </string-array>
+    <string-array name="jenisKelamin">
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+    </string-array>
     <string name="title_activity_tinjau_lokasi">Tinjau_lokasi</string>
     <string name="keamanan_wilayah">Keamanan Wilayah</string>
     <string name="total_kasus">Total Kasus</string>

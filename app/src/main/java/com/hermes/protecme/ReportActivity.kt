@@ -1,8 +1,11 @@
 package com.hermes.protecme
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -21,7 +24,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.hermes.protecme.databinding.ActivityReportBinding
 import com.hermes.protecme.model.Pelaporan
+import com.hermes.protecme.sharepref.SavePref
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ReportActivity : AppCompatActivity() {
@@ -31,12 +36,16 @@ class ReportActivity : AppCompatActivity() {
     private lateinit var imgBytArray:ByteArray
     lateinit var ref: DatabaseReference
     lateinit var imgUrl:Uri
+    lateinit var sharePref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        //sharepref
+        sharePref = getSharedPreferences(SavePref.PREF_NAME,Context.MODE_PRIVATE)
 
         //firebase
         ref = FirebaseDatabase.getInstance().getReference("pelaporan")
@@ -45,11 +54,9 @@ class ReportActivity : AppCompatActivity() {
         val items = resources.getStringArray(R.array.report_array)
         val spinnerAdapter =
             object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items) {
-
                 override fun isEnabled(position: Int): Boolean {
                     return position != 0
                 }
-
                 override fun getDropDownView(
                     position: Int,
                     convertView: View?,
@@ -64,7 +71,6 @@ class ReportActivity : AppCompatActivity() {
                     }
                     return view
                 }
-
             }
 
         val spinner_jenis = findViewById<Spinner>(R.id.spinner_jenis)
@@ -74,7 +80,6 @@ class ReportActivity : AppCompatActivity() {
         spinner_jenis.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -86,7 +91,6 @@ class ReportActivity : AppCompatActivity() {
                     (view as TextView).setTextColor(Color.GRAY)
                 }
             }
-
         }
 
 
@@ -150,6 +154,7 @@ class ReportActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat", "SuspiciousIndentation")
     private fun insertPelaporan(){
         timeStamp = System.currentTimeMillis().toString()
         //field text
@@ -169,26 +174,26 @@ class ReportActivity : AppCompatActivity() {
             if (upload.isSuccessful){
                 refStore.downloadUrl.addOnCompleteListener {
                     it.result?.let { url ->
+                        //date
+                        val sdf = SimpleDateFormat("HH:mm")
+                        val jam = sdf.format(Date())
                         imgUrl = url
+                        val idUser = sharePref.getString(SavePref.UID,"123").toString()
                         val pelaporan = Pelaporan(idPel,
-                            "123",
+                            idUser,
                             jenisPelaporan,
                             judulPelecehan,
                             pihakBersangkutan,
                             tanggal,
-                            "08.30",
+                            jam,
                             kronologi,
                             tempat,
                             url.toString(),
                             "Terkirim")
-
-                        if (idPel != null) {
-                            ref.child(idPel).setValue(pelaporan)
-                        }
-
-
+                            if (idPel != null) {
+                                ref.child(idPel).setValue(pelaporan)
+                            }
                     }
-
                 }
             }
         }

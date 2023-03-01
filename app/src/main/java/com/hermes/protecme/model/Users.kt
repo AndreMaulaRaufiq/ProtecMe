@@ -1,6 +1,6 @@
 package com.hermes.protecme.model
 
-data class user(
+data class Users(
     val id:String,
     val nama:String,
     val email:String,
@@ -9,4 +9,6 @@ data class user(
     val tgl_lahir:String,
     val alamat:String,
     val url_img:String,
-)
+){
+    constructor():this("","","","","","","","",)
+}

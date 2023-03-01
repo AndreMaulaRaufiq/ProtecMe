@@ -23,6 +23,7 @@
             android:contentDescription="background layar utama" />
 
         <ImageView
+            android:id="@+id/icProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -272,7 +273,8 @@
             app:backgroundTint="@color/purple_200"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
             android:src="@drawable/ic_baseline_sos_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

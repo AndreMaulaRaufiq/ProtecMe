@@ -1,12 +1,17 @@
 package com.hermes.protecme
 
 import android.Manifest
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -15,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.*
 import com.hermes.protecme.databinding.ActivitySosBinding
 import com.hermes.protecme.model.Sos
+import com.hermes.protecme.sharepref.SavePref
 
 class SosActivity : AppCompatActivity() {
     private var handlerAnimation = Handler(Looper.getMainLooper())
@@ -23,8 +29,8 @@ class SosActivity : AppCompatActivity() {
     private  val permissionId = 101
     lateinit var mainHandler:Handler
     private var isLocationStart = true
-
-
+    lateinit var sharePref: SharedPreferences
+    lateinit var idUser:String
     lateinit var ref:DatabaseReference
     lateinit var refIdUser:Query
 
@@ -44,14 +50,22 @@ class SosActivity : AppCompatActivity() {
         binding = ActivitySosBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         //animasi pulse
         startPulse()
 
 
 
+        //sharepref
+        sharePref = getSharedPreferences(SavePref.PREF_NAME,Context.MODE_PRIVATE)
+        idUser = sharePref.getString(SavePref.UID,"123").toString()
+
+
+
         //firebase
         ref = FirebaseDatabase.getInstance().getReference("sos")
-        refIdUser = ref.orderByChild("id_user").equalTo("123")
+        refIdUser = ref.orderByChild("id_user").equalTo(idUser)
 
         //evetn every 15s get lokasi
         mainHandler = Handler(Looper.getMainLooper())
@@ -103,6 +117,7 @@ class SosActivity : AppCompatActivity() {
     }
 
     private fun getLokasi() {
+
         //timestamp
         val currentTimestamp = System.currentTimeMillis()
         Log.e("TIMESTAMP",currentTimestamp.toString())
@@ -135,7 +150,7 @@ class SosActivity : AppCompatActivity() {
                             }
                         }else{
                             val idSos:String? = ref.push().key
-                            val sos = Sos(idSos,"123",location.latitude.toString(),location.longitude.toString(),currentTimestamp,true)
+                            val sos = Sos(idSos,idUser,location.latitude.toString(),location.longitude.toString(),currentTimestamp,true)
                             if (idSos != null) {
                                 ref.child(idSos).setValue(sos)
                                 Log.e("ANDI GANTENG","Data created: "+location.latitude.toString())
