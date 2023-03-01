@@ -71,6 +71,7 @@
                 android:text="Judul Permasalahan*" />
 
             <EditText
+                android:id="@+id/etJudulPelecehan"
                 android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,6 +86,7 @@
                 android:text="Pihak yang bersangkutan*" />
 
             <EditText
+                android:id="@+id/et_bersangkutan"
                 android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,7 +100,7 @@
                 android:text="Tanggal kejadian*" />
 
             <EditText
-                android:id="@+id/tv_tanggal"
+                android:id="@+id/et_tanggal"
                 android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -107,12 +109,12 @@
                 android:drawableEnd="@drawable/date_icon"/>
 
             <TextView
-                android:id="@+id/tv_kronologi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Kronologi kejadian*" />
 
             <EditText
+                android:id="@+id/et_kronologi"
                 android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,6 +129,7 @@
                 android:text="Lokasi kejadian*" />
 
             <EditText
+                android:id="@+id/et_lokasi"
                 android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,15 +1,17 @@
 package com.hermes.protecme.model
 
 data class Pelaporan(
-    val id:String,
+    val id:String?,
     val id_user:String,
-    val nama:String,
-    val jenis_pelecehan:String,
-    val pihak_bersangkutan:String,
-    val tanggal_kejadian:String,
-    val waktu_kejadian:String,
+    val jenisPelecehan:String,
+    val judulPelecehan:String,
+    val pihakBersangkutan:String,
+    val tglKejadian:String,
+    val waktuKejadian:String,
     val kronologi:String,
-    val lokasi_kejadian:String,
-    val file_bukti:String,
-    val status_pelaksanaan:String,
-)
+    val lokasiKejadian:String,
+    val fileBukti: String,
+    val statusPelaksanaan:String,
+){
+    constructor():this("","","","","","","","","","","")
+}
