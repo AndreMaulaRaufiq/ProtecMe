@@ -45,12 +45,14 @@
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
             android:orientation="vertical"
+            android:padding="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_header">
+            app:layout_constraintTop_toBottomOf="@id/card_header"
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/tv_jenislapor"
@@ -60,94 +62,107 @@
 
             <Spinner
                 android:id="@+id/spinner_jenis"
-                android:background="@drawable/box_border"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="@drawable/box_border" />
 
             <TextView
                 android:id="@+id/tv_judulmasalah"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Judul Permasalahan*" />
 
             <EditText
                 android:id="@+id/etJudulPelecehan"
-                android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/box_border"
                 android:ellipsize="end"
-                android:paddingStart="12dp"
-                android:hint="Percobaan pelecehan"/>
+                android:hint="Percobaan pelecehan"
+                android:paddingStart="12dp" />
 
             <TextView
                 android:id="@+id/tv_bersangkutan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Pihak yang bersangkutan*" />
 
             <EditText
                 android:id="@+id/et_bersangkutan"
-                android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/box_border"
                 android:ellipsize="end"
-                android:paddingStart="12dp"
-                android:hint="Korban, pelaku, dll." />
+                android:hint="Korban, pelaku, dll."
+                android:paddingStart="12dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Tanggal kejadian*" />
 
             <EditText
                 android:id="@+id/et_tanggal"
-                android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="12dp"
+                android:background="@drawable/box_border"
+                android:drawableEnd="@drawable/date_icon"
                 android:hint="Pilih tanggal"
-                android:drawableEnd="@drawable/date_icon"/>
+                android:padding="12dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Kronologi kejadian*" />
 
             <EditText
                 android:id="@+id/et_kronologi"
-                android:background="@drawable/box_border"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:background="@drawable/box_border"
+                android:hint="Jelaskan kronologi kejadian"
                 android:inputType="textMultiLine"
-                android:paddingStart="12dp"
-                android:hint="Jelaskan kronologi kejadian" />
+
+                android:paddingStart="12dp" />
 
             <TextView
                 android:id="@+id/tv_lokasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Lokasi kejadian*" />
 
             <EditText
                 android:id="@+id/et_lokasi"
-                android:background="@drawable/box_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/box_border"
+                android:hint="Jelaskan lokasi kejadian"
                 android:inputType="textMultiLine"
-                android:paddingStart="12dp"
-                android:hint="Jelaskan lokasi kejadian" />
+                android:paddingStart="12dp" />
 
             <TextView
                 android:id="@+id/tv_bukti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Upload bukti (jika ada)" />
 
             <ImageView
                 android:id="@+id/iv_bukti"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:src="@drawable/imgplaceholder"/>
+                android:src="@drawable/imgplaceholder" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="*) dokumentasi sangat berguna untuk memperkuat pelaporan anda" />
 
             <CheckBox
                 android:id="@+id/cb_anonim"
@@ -157,10 +172,19 @@
 
             <Button
                 android:id="@+id/btn_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_marginTop="20dp"
                 android:text="Submit"
-                android:layout_gravity="center"/>
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null"
+                android:textAllCaps="false"
+                android:background="@drawable/rb" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -65,7 +65,7 @@ class History : AppCompatActivity() {
             val layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
             val adapterHistory = AdapterHistory(data,object :AdapterHistory.OnItemClick{
                 override fun klik() {
-                    startActivity(Intent(this@History,Pelecehan_UNS::class.java))
+                    startActivity(Intent(this@History,DetailReportActivity::class.java))
                 }
 
             })

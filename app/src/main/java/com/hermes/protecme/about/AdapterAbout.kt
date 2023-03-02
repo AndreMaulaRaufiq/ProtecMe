@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hermes.protecme.R
 
 class AdapterAbout(
-    private val listData:List<ItemAbout>):RecyclerView.Adapter<AdapterAbout.ViewHolder>(){
+    private val listData:List<ItemAbout>, private val listener:AdapterAbout.ItemAdapterCallBack):RecyclerView.Adapter<AdapterAbout.ViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,7 +18,7 @@ class AdapterAbout(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listData[position])
+        holder.bind(listData[position],listener)
     }
 
     override fun getItemCount(): Int {
@@ -26,11 +26,13 @@ class AdapterAbout(
     }
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val tvTitle = itemView.findViewById<TextView>(R.id.tvTitleAbout)
-        fun bind(data:ItemAbout){
+        fun bind(data:ItemAbout, listener: ItemAdapterCallBack){
             itemView.apply {
                 tvTitle.text = data.titile
                 tvTitle.setCompoundDrawablesWithIntrinsicBounds(data.icon,0,0,0)
-
+                setOnClickListener {
+                    listener.onClick(it,data)
+                }
             }
         }
     }

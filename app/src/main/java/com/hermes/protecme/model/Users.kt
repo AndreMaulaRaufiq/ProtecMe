@@ -1,14 +1,14 @@
 package com.hermes.protecme.model
 
 data class Users(
-    val id:String,
-    val nama:String,
-    val email:String,
-    val no_hp:String,
-    val jenis_kelamin:String,
-    val tgl_lahir:String,
-    val alamat:String,
-    val url_img:String,
+    var id:String,
+    var nama:String,
+    var email:String,
+    var no_hp:String,
+    var jenis_kelamin:String,
+    var tgl_lahir:String,
+    var alamat:String,
+    var url_img:String,
 ){
     constructor():this("","","","","","","","",)
 }

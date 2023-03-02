@@ -37,6 +37,7 @@ class ReportActivity : AppCompatActivity() {
     lateinit var ref: DatabaseReference
     lateinit var imgUrl:Uri
     lateinit var sharePref: SharedPreferences
+    var isFoto = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,20 +138,24 @@ class ReportActivity : AppCompatActivity() {
         //Submit
         val submit = findViewById<Button>(R.id.btn_submit)
         submit.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            val view = layoutInflater.inflate(R.layout.custom_dialog_submit, null)
-            builder.setView(view)
-            builder.setCancelable(true)
-            val dialog = builder.create()
-
             insertPelaporan()
-            dialog.show()
 
-            val close = view.findViewById<Button>(R.id.btn_close)
-            close.setOnClickListener {
-                dialog.dismiss()
-                startActivity(Intent(this,MainActivity::class.java))
-            }
+        }
+    }
+
+    private fun showDialog(){
+        val builder = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.custom_dialog_submit, null)
+        builder.setView(view)
+        builder.setCancelable(true)
+        val dialog = builder.create()
+
+
+        dialog.show()
+        val close = view.findViewById<Button>(R.id.btn_close)
+        close.setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(this,MainActivity::class.java))
         }
     }
 
@@ -164,39 +169,81 @@ class ReportActivity : AppCompatActivity() {
         val tanggal = binding.etTanggal.text.toString()
         val kronologi = binding.etKronologi.text.toString()
         val tempat = binding.etLokasi.text.toString()
+        if (judulPelecehan.isEmpty()){
+            binding.etJudulPelecehan.error = "Masukan judul pelecehan"
+        }
+        if (pihakBersangkutan.isEmpty()){
+            binding.etBersangkutan.error = "Masukan pihak bersangkutan"
+        }
+        if (tanggal.isEmpty()){
+            binding.etTanggal.error = "Masukan tanggal"
+        }
+        if (kronologi.isEmpty()){
+            binding.etKronologi.error = "Masukan kronologi"
+        }
+        if (tempat.isEmpty()){
+            binding.etLokasi.error = "Masukan lokasi kejadian"
+        }
 
-        //push firebase
-        val idPel:String? = ref.push().key
 
-        //firebase
-        val refStore = FirebaseStorage.getInstance().reference.child("img/123$timeStamp")
-        refStore.putBytes(imgBytArray).addOnCompleteListener { upload ->
-            if (upload.isSuccessful){
-                refStore.downloadUrl.addOnCompleteListener {
-                    it.result?.let { url ->
-                        //date
-                        val sdf = SimpleDateFormat("HH:mm")
-                        val jam = sdf.format(Date())
-                        imgUrl = url
-                        val idUser = sharePref.getString(SavePref.UID,"123").toString()
-                        val pelaporan = Pelaporan(idPel,
-                            idUser,
-                            jenisPelaporan,
-                            judulPelecehan,
-                            pihakBersangkutan,
-                            tanggal,
-                            jam,
-                            kronologi,
-                            tempat,
-                            url.toString(),
-                            "Terkirim")
+        if (isFoto){
+            //push firebase
+            val idPel:String? = ref.push().key
+            //firebase
+            val refStore = FirebaseStorage.getInstance().reference.child("img/123$timeStamp")
+            refStore.putBytes(imgBytArray).addOnCompleteListener { upload ->
+                if (upload.isSuccessful){
+                    refStore.downloadUrl.addOnCompleteListener {
+                        it.result?.let { url ->
+                            //date
+                            val sdf = SimpleDateFormat("HH:mm")
+                            val jam = sdf.format(Date())
+                            imgUrl = url
+                            val idUser = sharePref.getString(SavePref.UID,"123").toString()
+                            val pelaporan = Pelaporan(idPel,
+                                idUser,
+                                jenisPelaporan,
+                                judulPelecehan,
+                                pihakBersangkutan,
+                                tanggal,
+                                jam,
+                                kronologi,
+                                tempat,
+                                url.toString(),
+                                "Terkirim")
                             if (idPel != null) {
                                 ref.child(idPel).setValue(pelaporan)
+                                showDialog()
                             }
+                        }
                     }
                 }
             }
+        }else{
+            //date
+            val sdf = SimpleDateFormat("HH:mm")
+            val jam = sdf.format(Date())
+            //push firebase
+            val idPel:String? = ref.push().key
+            val idUser = sharePref.getString(SavePref.UID,"123").toString()
+            val pelaporan = Pelaporan(idPel,
+                idUser,
+                jenisPelaporan,
+                judulPelecehan,
+                pihakBersangkutan,
+                tanggal,
+                jam,
+                kronologi,
+                tempat,
+                "",
+                "Terkirim")
+            if (idPel != null) {
+                ref.child(idPel).setValue(pelaporan)
+                showDialog()
+            }
         }
+
+
 
     }
 
