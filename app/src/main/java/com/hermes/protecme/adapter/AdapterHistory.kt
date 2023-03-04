@@ -29,15 +29,15 @@ class AdapterHistory(val listHistory:ArrayList<Pelaporan>, val listener:AdapterH
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.tv_title)
 
-        fun bind(article:Pelaporan,listener: OnItemClick){
-            title.text = article.jenisPelecehan
+        fun bind(data:Pelaporan,listener: OnItemClick){
+            title.text = data.jenisPelecehan
             itemView.setOnClickListener {
-                listener.klik()
+                listener.klik(data)
             }
         }
     }
 
     interface OnItemClick{
-        fun klik()
+        fun klik(data:Pelaporan)
     }
 }

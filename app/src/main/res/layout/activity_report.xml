@@ -112,6 +112,20 @@
                 android:drawableEnd="@drawable/date_icon"
                 android:hint="Pilih tanggal"
                 android:padding="12dp" />
+            <TextView
+                android:autoSizeMaxTextSize="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Waktu kejadian*" />
+            <EditText
+                android:id="@+id/etWaktu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/box_border"
+                android:drawableEnd="@drawable/ic_baseline_access_time_24"
+                android:hint="Pilih waktu"
+                android:padding="12dp" />
 
             <TextView
                 android:layout_width="match_parent"

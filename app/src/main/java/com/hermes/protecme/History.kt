@@ -16,7 +16,7 @@ import com.hermes.protecme.databinding.ActivityHistoryBinding
 import com.hermes.protecme.model.Pelaporan
 import com.hermes.protecme.sharepref.SavePref
 
-class History : AppCompatActivity() {
+class History : AppCompatActivity(),AdapterHistory.OnItemClick {
     private lateinit var binding:ActivityHistoryBinding
     private lateinit var arrayHistory:ArrayList<Pelaporan>
     lateinit var sharePref: SharedPreferences
@@ -63,16 +63,22 @@ class History : AppCompatActivity() {
             binding.tvLaporanKosong.visibility = View.VISIBLE
         }else{
             val layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-            val adapterHistory = AdapterHistory(data,object :AdapterHistory.OnItemClick{
-                override fun klik() {
-                    startActivity(Intent(this@History,DetailReportActivity::class.java))
-                }
-
-            })
+            val adapterHistory = AdapterHistory(data,this)
             binding.rcListHistory.layoutManager = layoutManager
             binding.rcListHistory.adapter = adapterHistory
         }
 
 
     }
+
+    override fun klik(data: Pelaporan) {
+        val intent = Intent(this,DetailReportActivity::class.java)
+//        val bundle = Bundle()
+//        bundle.putParcelable("DATA",data)
+        intent.putExtra("Data",data)
+        startActivity(intent)
+
+
+    }
+
 }

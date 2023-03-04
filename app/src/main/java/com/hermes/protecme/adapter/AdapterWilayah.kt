@@ -33,7 +33,7 @@ class AdapterWilayah(val listHistory:List<Wilayah>):RecyclerView.Adapter<Adapter
 
         fun bind(article:Wilayah){
             title.text = article.title
-            kasus.text = article.kasus
+            kasus.text = article.kasus + " kasus"
         }
     }
 

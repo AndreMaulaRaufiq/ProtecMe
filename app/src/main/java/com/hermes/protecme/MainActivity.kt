@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         if(auth.currentUser==null){
             val intent=Intent(this,LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
 
@@ -46,9 +47,13 @@ class MainActivity : AppCompatActivity() {
 
         val idUser = sharePref.getString(SavePref.UID,"123").toString()
         mainModel.getUser(idUser)
+        mainModel.user.observe(this){user->
+            binding.tvNamaHome.text = "Hai, "+user?.nama
+        }
 
-
-
+        binding.imageView4.setOnClickListener {
+            startActivity(Intent(this,Tinjau_lokasi::class.java))
+        }
         binding.icProfile.setOnClickListener {
             startActivity(Intent(this,ProfileActivity::class.java))
         }

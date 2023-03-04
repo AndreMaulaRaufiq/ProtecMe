@@ -3,6 +3,7 @@ package com.hermes.protecme
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -94,6 +95,17 @@ class ReportActivity : AppCompatActivity() {
             }
         }
 
+        binding.etWaktu.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                val h = SimpleDateFormat("HH:mm").format(cal.time)
+                binding.etWaktu.setText(h)
+            }
+            TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+        }
+
 
         //Tanggal
         val date = findViewById<TextView>(R.id.et_tanggal)
@@ -169,6 +181,7 @@ class ReportActivity : AppCompatActivity() {
         val tanggal = binding.etTanggal.text.toString()
         val kronologi = binding.etKronologi.text.toString()
         val tempat = binding.etLokasi.text.toString()
+        val jam = binding.etWaktu.text.toString()
         if (judulPelecehan.isEmpty()){
             binding.etJudulPelecehan.error = "Masukan judul pelecehan"
         }
@@ -178,12 +191,16 @@ class ReportActivity : AppCompatActivity() {
         if (tanggal.isEmpty()){
             binding.etTanggal.error = "Masukan tanggal"
         }
+        if (jam.isEmpty()){
+            binding.etWaktu.error = "Masukan Waktu"
+        }
         if (kronologi.isEmpty()){
             binding.etKronologi.error = "Masukan kronologi"
         }
         if (tempat.isEmpty()){
             binding.etLokasi.error = "Masukan lokasi kejadian"
         }
+
 
 
         if (isFoto){
@@ -195,9 +212,7 @@ class ReportActivity : AppCompatActivity() {
                 if (upload.isSuccessful){
                     refStore.downloadUrl.addOnCompleteListener {
                         it.result?.let { url ->
-                            //date
-                            val sdf = SimpleDateFormat("HH:mm")
-                            val jam = sdf.format(Date())
+
                             imgUrl = url
                             val idUser = sharePref.getString(SavePref.UID,"123").toString()
                             val pelaporan = Pelaporan(idPel,
@@ -220,9 +235,6 @@ class ReportActivity : AppCompatActivity() {
                 }
             }
         }else{
-            //date
-            val sdf = SimpleDateFormat("HH:mm")
-            val jam = sdf.format(Date())
             //push firebase
             val idPel:String? = ref.push().key
             val idUser = sharePref.getString(SavePref.UID,"123").toString()
